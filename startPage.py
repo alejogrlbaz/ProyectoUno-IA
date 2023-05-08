@@ -26,24 +26,55 @@ canvas.config(scrollregion=(0,0,0,4000))
 
 #Activar botones no informada
 def no_informada():
+     
+    for widget in content.winfo_children():
+        widget.forget()
+
+    title_label = Label(content, text="BUSQUEDA NO INFORMADA")
+    title_label.pack(pady=20)
+
     boton_amplitud.pack()
     boton_costo_uniforme.pack()
     boton_profundidad.pack()
-
-    boton_informada.forget()
+    boton_atras.pack()
+    
 
 #Activar botones de informada  
 def informada():
+    for widget in content.winfo_children():
+        widget.forget()
+    title_label = Label(content, text="BUSQUEDA INFORMADA")
+    title_label.pack(pady=20)
     boton_avara.pack()
-    boton_costo_uniforme.pack()
-    boton_profundidad.pack()
+    boton_avara2.pack()
+    boton_atras.pack()
+
+
+def atras():
+    for widget in content.winfo_children():
+        widget.forget()
+    title_label = Label(content, text="PROYECTO UNO - INTELIGENCIA ARTIFICIAL")
+    title_label.pack(pady=20)
+    boton_no_informada.pack()
+    boton_informada.pack()
+
 
 def algoritmo(str):
-    if(str=="Amplitud"):
+    if (str=="amplitud"):
         print("Estoy en amplitud")
-        main.GokuSmart()
+    elif (str=="costo_uniforme"):
+        print("Estoy en costo uniforme")
+    elif (str=="profundidad"):
+        print("Estoy en profundidad")
+    elif (str=="avara"):
+        print("Estoy en avara")
+    elif (str=="A*"):
+        print("Estoy en A*")
+      #  main.GokuSmart()
 
 # Creamos los botones para seleccionar el tipo de busqueda
+title_label = Label(content, text="PROYECTO UNO - INTELIGENCIA ARTIFICIAL")
+title_label.pack(pady=20)
 boton_no_informada = Button(
     content, 
     text='BÚSQUEDA NO INFORMADA',
@@ -64,21 +95,21 @@ boton_informada.pack()
 boton_amplitud = Button(
     content, 
     text='Amplitud',
-    command=algoritmo("Amplitud"),
+    command=algoritmo("amplitud"),
     cursor='X_cursor'
     )
 
 boton_costo_uniforme = Button(
     content, 
     text='Costo Uniforme',
-    #command=limpiar_pantalla,
+    command=algoritmo("costo_uniforme"),
     cursor='X_cursor'
     )
 
 boton_profundidad = Button(
     content, 
     text='Profundidad',
-    #command=limpiar_pantalla,
+    command=algoritmo("profundidad"),
     cursor='X_cursor'
     )
 
@@ -86,15 +117,24 @@ boton_profundidad = Button(
 boton_avara = Button(
     content, 
     text='Avara',
-    #command=limpiar_pantalla,
+    command=algoritmo("avara"),
     cursor='X_cursor'
     )
 
 boton_avara2 = Button(
     content, 
     text='A*',
-    #command=limpiar_pantalla,
+    command=algoritmo("A*"),
     cursor='X_cursor'
     )
+
+#Botón de retroceder
+
+boton_atras =Button(
+    content, 
+    text='Atrás',
+    command=atras,
+    cursor='X_cursor'
+)
 
 content.mainloop()
