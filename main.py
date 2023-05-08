@@ -1,4 +1,3 @@
-from typing import Self
 import pygame
 from tkinter import *
 
