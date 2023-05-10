@@ -1,3 +1,9 @@
+import startPage
+
+def draw_way(way):
+    way
+ 
+
 def find_next(coordinates, maze):
     #Arreglo para almacenar las posiciones vecinas
     next_coordinates = []
@@ -50,19 +56,4 @@ def dfs(maze, start, goals):
             stack.append(x)
             print(f"Visited nodes: {visited}")
             print(f"Stack: {stack}")
-
-#def main():
-    # maze = [[0, 5, 3, 1, 1, 1, 1, 1, 1, 1], 
-    #         [0, 1, 0, 0, 1, 0, 0, 0, 1, 1], 
-    #         [0, 1, 1, 0, 3, 5, 1, 0, 2, 0], 
-    #         [0, 1, 1, 1, 3, 1, 1, 1, 1, 0], 
-    #         [6, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-    #         [1, 1, 4, 1, 1, 1, 1, 1, 1, 0], 
-    #         [1, 1, 0, 4, 4, 0, 0, 1, 1, 5], 
-    #         [1, 1, 0, 0, 1, 1, 0, 1, 1, 0], 
-    #         [0, 0, 0, 0, 1, 1, 5, 0, 0, 0], 
-    #         [1, 1, 1, 6, 1, 1, 0, 1, 1, 1]]
-    #dfs(maze, )
-
-if __name__ == "__main__":
-    main()
+        draw_way(way)
