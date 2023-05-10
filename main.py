@@ -1,6 +1,7 @@
-from typing import Self
+#from typing import Self
 import pygame
 from tkinter import *
+from open_file import abrir_archivo
 
 
 class GokuSmart:
@@ -36,21 +37,22 @@ class GokuSmart:
         imgEsfera = pygame.transform.scale(imgEsfera, (IMAGE_SIZE, IMAGE_SIZE))
 
         #carga de archivo
-        file = "file/file.txt"
+        file = ""
         
         #print(self.data)
 
         with open(file, "r") as file:
-            data = [[int(num) for num in line.split()] for line in file]
-            
+            data = [[int(num) for num in line.split()] for line in file] #archivo de entrada lo pasa a listas
+            print(data[0][0])
+            print(data[0][1])
         # Configuración de la matriz
         CELL_SIZE = 50
         MARGIN = 10
         matrix = [[data[i][j] for j in range(10)] for i in range(10)]
-
+        print(matrix)
         # Dibuja la matriz en la pantalla
-        def draw_matrix():
-            for i in range(10):
+        
+        for i in range(10):
                 for j in range(10):
                     if matrix[i][j] == 1:
                         image = imgMuro
@@ -93,4 +95,4 @@ class GokuSmart:
         #ppal.mainloop()
 
     
-# GokuSmart()
+ #GokuSmart()

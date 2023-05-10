@@ -1,11 +1,125 @@
-from tkinter import *
-import main
+import pygame
+import pygame_gui
+
+from open_file import abrir_archivo
+pygame.init()
+
+# Configurar ventana de pygame
+screen = pygame.display.set_mode((640, 480))
+pygame.display.set_caption("Botones en Pygame")
+
+# Crear objeto UIManager
+manager = pygame_gui.UIManager((640, 480))
+
+# Crear botones
+button_width = 100
+button_height = 40
+button_padding = 10
+button_start_x = (screen.get_width() - (button_width * 6 + button_padding * 5)) // 2  # Calcular el punto de inicio para la primera fila de botones
+button_start_y = 10  # Alineación vertical en la parte superior de la ventana
+
+button1 = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect(
+        (button_start_x, button_start_y),
+        (button_width, button_height)
+    ),
+    text="Cargar mundo",
+    manager=manager
+)
+
+button2 = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect(
+        (button_start_x + button_width + button_padding, button_start_y),
+        (button_width, button_height)
+    ),
+    text="Amplitud",
+    manager=manager
+)
+
+button3 = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect(
+        (button_start_x + (button_width + button_padding) * 2, button_start_y),
+        (button_width, button_height)
+    ),
+    text="Costo uniforme",
+    manager=manager
+)
+
+button4 = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect(
+        (button_start_x + (button_width + button_padding) * 3, button_start_y),
+        (button_width, button_height)
+    ),
+    text="Profundidad",
+    manager=manager
+)
+
+button5 = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect(
+        (button_start_x + (button_width + button_padding) * 4, button_start_y),
+        (button_width, button_height)
+    ),
+    text="Avara",
+    manager=manager
+)
+
+button6 = pygame_gui.elements.UIButton(
+    relative_rect=pygame.Rect(
+        (button_start_x + (button_width + button_padding) * 5, button_start_y),
+        (button_width, button_height)
+    ),
+    text="Avara*",
+    manager=manager
+)
+
+# Iniciar bucle de eventos de pygame
+clock = pygame.time.Clock()
+running = True
+while running:
+    time_delta = clock.tick(60) / 1000.0  # Actualizar el tiempo delta
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        # Manejar eventos de pygame_gui
+        if event.type == pygame.USEREVENT:
+            if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == button1:
+                    print("Cargar mundo")
+                    txt = abrir_archivo()
+                elif event.ui_element == button2:
+                    print("Amplitud")
+                elif event.ui_element == button3:
+                    print("Costo uniforme")
+                elif event.ui_element == button4:
+                    print("Profundidad")
+                elif event.ui_element == button5:
+                    print("Avara")
+                elif event.ui_element == button6:
+                    print("Avara*")
+
+        # Actualizar elementos de pygame_gui
+        manager.process_events(event)
+
+    # Dibujar elementos en la pantalla
+    screen.fill((255, 255, 255))
+    manager.update(time_delta)
+    manager.draw_ui(screen)
+    
+    
+    # Actualizar la pantalla de pygame
+    pygame.display.flip()
+
+pygame.quit()
+
+'''from tkinter import *
+from main import GokuSmart
 
 # Creamos la content principal
 ventana = Tk()
 
 #titulo de la content
-ventana.title('ADA II')
+ventana.title('IA')
 
 # Modificamos en tamaño de la content 
 ventana.geometry('500x400')
@@ -136,5 +250,5 @@ boton_atras =Button(
     command=atras,
     cursor='X_cursor'
 )
-
-content.mainloop()
+GokuSmart()
+content.mainloop()'''
