@@ -65,8 +65,8 @@ def matriz(file):
                     else:
                         image = white
 
-                    rect = pygame.Rect(j * (CELL_SIZE + MARGIN) + MARGIN, i * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
-                    button = pygame_gui.elements.UIButton(rect, "", manager=manager)
+                    rect = pygame.Rect((j+1) * (CELL_SIZE + MARGIN) + MARGIN, (i+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
+                    button = pygame_gui.elements.UILabel(rect, "", manager=manager)
                     button.set_image(image)
                     row.append(button)
                 buttons.append(row)
@@ -172,7 +172,7 @@ while running:
         manager.process_events(event)
 
     # Dibujar elementos en la pantalla
-    screen.fill((255,255,255))
+    screen.fill((189,195,199))
     manager.update(time_delta)
     manager.draw_ui(screen)
     
