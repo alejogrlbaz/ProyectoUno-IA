@@ -1,15 +1,83 @@
 import pygame
 import pygame_gui
+import profundidad
 
 from open_file import abrir_archivo
 pygame.init()
 
 # Configurar ventana de pygame
-screen = pygame.display.set_mode((640, 480))
+screen = pygame.display.set_mode((640, 610))
 pygame.display.set_caption("Botones en Pygame")
 
 # Crear objeto UIManager
-manager = pygame_gui.UIManager((640, 480))
+manager = pygame_gui.UIManager((640, 610))
+
+# Cargar imágenes
+IMAGE_SIZE = 30
+white = pygame.image.load("img/white.png")
+white = pygame.transform.scale(white, (IMAGE_SIZE, IMAGE_SIZE))
+imgMuro = pygame.image.load("img/muro.png")
+imgMuro = pygame.transform.scale(imgMuro, (IMAGE_SIZE, IMAGE_SIZE))
+imgGoku = pygame.image.load("img/goku.png")
+imgGoku = pygame.transform.scale(imgGoku, (IMAGE_SIZE, IMAGE_SIZE))
+imgFreezer = pygame.image.load("img/freezer.png")
+imgFreezer = pygame.transform.scale(imgFreezer, (IMAGE_SIZE, IMAGE_SIZE))
+imgCell = pygame.image.load("img/cell.png")
+imgCell = pygame.transform.scale(imgCell, (IMAGE_SIZE, IMAGE_SIZE))
+imgSemilla = pygame.image.load("img/semilla.png")
+imgSemilla = pygame.transform.scale(imgSemilla, (IMAGE_SIZE, IMAGE_SIZE))
+imgEsfera = pygame.image.load("img/esfera.png")
+imgEsfera = pygame.transform.scale(imgEsfera, (IMAGE_SIZE, IMAGE_SIZE))
+
+
+def matriz(file):
+        my_button_style = {
+            'hover_color': None,  # establece el color de resaltado en None para evitar que se pinte de gris
+        }
+
+        with open(file, "r") as file:
+            data = [[int(num) for num in line.split()] for line in file] #archivo de entrada lo pasa a listas
+        # Configuración de la matriz
+        CELL_SIZE = 40
+        MARGIN = 10
+        matrix = [[data[i][j] for j in range(10)] for i in range(10)]
+        start = ()
+        goals = []
+        # Dibuja la matriz en la pantalla
+        buttons=[]
+        for i in range(10):
+                row=[]
+                for j in range(10):
+                    if matrix[i][j] == 1:
+                        image = imgMuro
+                    elif matrix[i][j] == 2:
+                        image = imgGoku
+                        start = (i,j)
+                    elif matrix[i][j] == 3:
+                        image = imgFreezer
+                    elif matrix[i][j] == 4:
+                        image = imgCell
+                    elif matrix[i][j] == 5:
+                        image = imgSemilla
+                    elif matrix[i][j] == 6:
+                        image = imgEsfera
+                        goals.append((i,j))
+                    else:
+                        image = white
+
+                    rect = pygame.Rect(j * (CELL_SIZE + MARGIN) + MARGIN, i * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
+                    button = pygame_gui.elements.UIButton(rect, "", manager=manager)
+                    button.set_image(image)
+                    row.append(button)
+                buttons.append(row)
+                    
+                    #font = pygame.font.SysFont(None, 30)
+                    
+                    #text = font.render(str(matrix[i][j]), True, (0, 0, 0))
+                   # screen.blit(image, (j * (CELL_SIZE + MARGIN) + MARGIN, i * (CELL_SIZE + MARGIN) + MARGIN))
+        return matrix, start, goals
+        #screen.blit(image, rect)
+
 
 # Crear botones
 button_width = 100
@@ -87,12 +155,14 @@ while running:
                 if event.ui_element == button1:
                     print("Cargar mundo")
                     txt = abrir_archivo()
+                    matriz(txt)
                 elif event.ui_element == button2:
                     print("Amplitud")
                 elif event.ui_element == button3:
                     print("Costo uniforme")
                 elif event.ui_element == button4:
                     print("Profundidad")
+                    profundidad.dfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2])
                 elif event.ui_element == button5:
                     print("Avara")
                 elif event.ui_element == button6:
@@ -102,7 +172,7 @@ while running:
         manager.process_events(event)
 
     # Dibujar elementos en la pantalla
-    screen.fill((255, 255, 255))
+    screen.fill((255,255,255))
     manager.update(time_delta)
     manager.draw_ui(screen)
     
