@@ -7,18 +7,18 @@ pygame.init()
 
 # Configurar ventana de pygame
 screen = pygame.display.set_mode((640, 610))
-pygame.display.set_caption("Botones en Pygame")
+pygame.display.set_caption("Goku Smart")
 
 # Crear objeto UIManager
 manager = pygame_gui.UIManager((640, 610))
 
 # Cargar imágenes
-IMAGE_SIZE = 30
+IMAGE_SIZE = 40
 white = pygame.image.load("img/white.png")
 white = pygame.transform.scale(white, (IMAGE_SIZE, IMAGE_SIZE))
 imgMuro = pygame.image.load("img/muro.png")
 imgMuro = pygame.transform.scale(imgMuro, (IMAGE_SIZE, IMAGE_SIZE))
-imgGoku = pygame.image.load("img/goku.png")
+imgGoku = pygame.image.load("img/goku.jpg")
 imgGoku = pygame.transform.scale(imgGoku, (IMAGE_SIZE, IMAGE_SIZE))
 imgFreezer = pygame.image.load("img/freezer.png")
 imgFreezer = pygame.transform.scale(imgFreezer, (IMAGE_SIZE, IMAGE_SIZE))
@@ -31,9 +31,6 @@ imgEsfera = pygame.transform.scale(imgEsfera, (IMAGE_SIZE, IMAGE_SIZE))
 
 
 def matriz(file):
-        my_button_style = {
-            'hover_color': None,  # establece el color de resaltado en None para evitar que se pinte de gris
-        }
 
         with open(file, "r") as file:
             data = [[int(num) for num in line.split()] for line in file] #archivo de entrada lo pasa a listas
