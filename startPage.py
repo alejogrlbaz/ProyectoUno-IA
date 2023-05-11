@@ -1,13 +1,38 @@
 import pygame
 import pygame_gui
 import profundidad
+import amplitud
+import costouniforme
+import time
+
 
 from open_file import abrir_archivo
 pygame.init()
 
+
 # Configurar ventana de pygame
-screen = pygame.display.set_mode((640, 610))
+screen = pygame.display.set_mode((650, 610))
+#cono y titulo
 pygame.display.set_caption("Goku Smart")
+icono=pygame.image.load("img/esfera.png")
+pygame.display.set_icon(icono)
+
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GRAY = (128, 128, 128)
+LIGHT_GRAY = (200, 200, 200)
+DARK_GRAY = (64, 64, 64)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+ORANGE = (255, 128, 0)
+PURPLE = (128, 0, 128)
+PINK = (255, 0, 255)
+BROWN = (139, 69, 19)
+
+screen.fill(LIGHT_GRAY)
 
 # Crear objeto UIManager
 manager = pygame_gui.UIManager((640, 610))
@@ -18,7 +43,7 @@ white = pygame.image.load("img/white.png")
 white = pygame.transform.scale(white, (IMAGE_SIZE, IMAGE_SIZE))
 imgMuro = pygame.image.load("img/muro.png")
 imgMuro = pygame.transform.scale(imgMuro, (IMAGE_SIZE, IMAGE_SIZE))
-imgGoku = pygame.image.load("img/goku.jpg")
+imgGoku = pygame.image.load("img/goku.png")
 imgGoku = pygame.transform.scale(imgGoku, (IMAGE_SIZE, IMAGE_SIZE))
 imgFreezer = pygame.image.load("img/freezer.png")
 imgFreezer = pygame.transform.scale(imgFreezer, (IMAGE_SIZE, IMAGE_SIZE))
@@ -40,7 +65,8 @@ def draw_label(way):
         rect = pygame.Rect((j+1) * (CELL_SIZE + MARGIN) + MARGIN, (i+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
         button = pygame_gui.elements.UILabel(rect, "", manager=manager)
         button.set_image(image)
-
+        
+        
 
 #Función para pintar la matriz del archivo que se recibe
 def matriz(file):
@@ -169,8 +195,10 @@ while running:
                     matriz(txt)
                 elif event.ui_element == button2:
                     print("Amplitud")
+                    draw_label(amplitud.bfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
                 elif event.ui_element == button3:
                     print("Costo uniforme")
+                    draw_label(costouniforme.ucs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
                 elif event.ui_element == button4:
                     print("Profundidad")
                     draw_label(profundidad.dfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
