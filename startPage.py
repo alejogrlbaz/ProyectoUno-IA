@@ -14,9 +14,6 @@ pygame.display.set_caption("Goku Smart")
 icono=pygame.image.load("img/esfera.png")
 pygame.display.set_icon(icono)
 
-#fondo
-fondo=pygame.image.load("img/fondo.jpg")
-screen.blit(fondo,(0,0))
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
