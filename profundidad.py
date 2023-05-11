@@ -1,3 +1,4 @@
+
 import startPage
 
 def draw_way(way):
@@ -57,3 +58,5 @@ def dfs(maze, start, goals):
             print(f"Visited nodes: {visited}")
             print(f"Stack: {stack}")
         draw_way(way)
+
+

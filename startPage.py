@@ -1,13 +1,38 @@
 import pygame
 import pygame_gui
 import profundidad
+import amplitud
 
 from open_file import abrir_archivo
 pygame.init()
 
+
 # Configurar ventana de pygame
-screen = pygame.display.set_mode((640, 610))
+screen = pygame.display.set_mode((650, 610))
+#cono y titulo
 pygame.display.set_caption("Goku Smart")
+icono=pygame.image.load("img/esfera.png")
+pygame.display.set_icon(icono)
+
+#fondo
+fondo=pygame.image.load("img/fondo.jpg")
+screen.blit(fondo,(0,0))
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GRAY = (128, 128, 128)
+LIGHT_GRAY = (200, 200, 200)
+DARK_GRAY = (64, 64, 64)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+ORANGE = (255, 128, 0)
+PURPLE = (128, 0, 128)
+PINK = (255, 0, 255)
+BROWN = (139, 69, 19)
+
+screen.fill(LIGHT_GRAY)
 
 # Crear objeto UIManager
 manager = pygame_gui.UIManager((640, 610))
@@ -18,7 +43,7 @@ white = pygame.image.load("img/white.png")
 white = pygame.transform.scale(white, (IMAGE_SIZE, IMAGE_SIZE))
 imgMuro = pygame.image.load("img/muro.png")
 imgMuro = pygame.transform.scale(imgMuro, (IMAGE_SIZE, IMAGE_SIZE))
-imgGoku = pygame.image.load("img/goku.jpg")
+imgGoku = pygame.image.load("img/goku.png")
 imgGoku = pygame.transform.scale(imgGoku, (IMAGE_SIZE, IMAGE_SIZE))
 imgFreezer = pygame.image.load("img/freezer.png")
 imgFreezer = pygame.transform.scale(imgFreezer, (IMAGE_SIZE, IMAGE_SIZE))
@@ -155,6 +180,7 @@ while running:
                     matriz(txt)
                 elif event.ui_element == button2:
                     print("Amplitud")
+                    amplitud.bfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2])
                 elif event.ui_element == button3:
                     print("Costo uniforme")
                 elif event.ui_element == button4:
