@@ -1,9 +1,9 @@
-import startPage
-
-def draw_way(way):
-    way
+#import startPage
  
+way_global=[]
 
+
+#Esta función me identifica las posiciones vecinas y si me puedo mover a ellas
 def find_next(coordinates, maze):
     #Arreglo para almacenar las posiciones vecinas
     next_coordinates = []
@@ -23,6 +23,7 @@ def find_next(coordinates, maze):
     return next_coordinates
 
 
+#Esta función realiza el proceso de encontrar la meta y recorrer los nodos
 def dfs(maze, start, goals):
     print("longitud de maze"+str(len(maze)))
     stack = []
@@ -43,7 +44,8 @@ def dfs(maze, start, goals):
             cont_goals = cont_goals+1
         if cont_goals == 2:
             print(f"Way: {way}")
-            return
+            way_global=way
+            return way
         print(f"No.")
         next_steps = find_next(n, maze)
         print(f"Next Steps: {next_steps}")
@@ -56,4 +58,3 @@ def dfs(maze, start, goals):
             stack.append(x)
             print(f"Visited nodes: {visited}")
             print(f"Stack: {stack}")
-        draw_way(way)
