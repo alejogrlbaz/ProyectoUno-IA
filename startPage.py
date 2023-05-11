@@ -2,6 +2,9 @@ import pygame
 import pygame_gui
 import profundidad
 import amplitud
+import costouniforme
+import time
+
 
 from open_file import abrir_archivo
 pygame.init()
@@ -62,7 +65,8 @@ def draw_label(way):
         rect = pygame.Rect((j+1) * (CELL_SIZE + MARGIN) + MARGIN, (i+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
         button = pygame_gui.elements.UILabel(rect, "", manager=manager)
         button.set_image(image)
-
+        
+        
 
 #Función para pintar la matriz del archivo que se recibe
 def matriz(file):
@@ -191,9 +195,10 @@ while running:
                     matriz(txt)
                 elif event.ui_element == button2:
                     print("Amplitud")
-                    amplitud.bfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2])
+                    draw_label(amplitud.bfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
                 elif event.ui_element == button3:
                     print("Costo uniforme")
+                    draw_label(costouniforme.ucs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
                 elif event.ui_element == button4:
                     print("Profundidad")
                     draw_label(profundidad.dfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
