@@ -31,12 +31,21 @@ imgEsfera = pygame.transform.scale(imgEsfera, (IMAGE_SIZE, IMAGE_SIZE))
 
 
 def draw_label(way):
+
     CELL_SIZE = 40
     MARGIN = 10
-    image=imgGoku
+    last=None
     for x in way:
+        image=imgGoku
+        print(x)
         i=x[0]
         j=x[1]
+        # if last is not None:
+        #     image=white
+        #     rect = pygame.Rect((j+1) * (CELL_SIZE + MARGIN) + MARGIN, (i+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
+        #     button = pygame_gui.elements.UILabel(rect, "", manager=manager)
+        #     button.set_image(image)
+
         rect = pygame.Rect((j+1) * (CELL_SIZE + MARGIN) + MARGIN, (i+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
         button = pygame_gui.elements.UILabel(rect, "", manager=manager)
         button.set_image(image)
