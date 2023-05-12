@@ -3,7 +3,7 @@ import pygame_gui
 import profundidad
 import amplitud
 import costouniforme
-import time
+import sys
 
 
 from open_file import abrir_archivo
@@ -45,6 +45,8 @@ imgMuro = pygame.image.load("img/muro.png")
 imgMuro = pygame.transform.scale(imgMuro, (IMAGE_SIZE, IMAGE_SIZE))
 imgGoku = pygame.image.load("img/goku.png")
 imgGoku = pygame.transform.scale(imgGoku, (IMAGE_SIZE, IMAGE_SIZE))
+imgGoku_Estela = pygame.image.load("img/estela-goku.png")
+imgGoku_Estela = pygame.transform.scale(imgGoku_Estela, (IMAGE_SIZE, IMAGE_SIZE))
 imgFreezer = pygame.image.load("img/freezer.png")
 imgFreezer = pygame.transform.scale(imgFreezer, (IMAGE_SIZE, IMAGE_SIZE))
 imgCell = pygame.image.load("img/cell.png")
@@ -55,16 +57,70 @@ imgEsfera = pygame.image.load("img/esfera.png")
 imgEsfera = pygame.transform.scale(imgEsfera, (IMAGE_SIZE, IMAGE_SIZE))
 
 
-def draw_label(way):
-    CELL_SIZE = 40
-    MARGIN = 10
-    image=imgGoku
-    for x in way:
-        i=x[0]
-        j=x[1]
-        rect = pygame.Rect((j+1) * (CELL_SIZE + MARGIN) + MARGIN, (i+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
-        button = pygame_gui.elements.UILabel(rect, "", manager=manager)
-        button.set_image(image)
+def draw_label(way,file):
+
+    #creamos la martiz incial para comprar las posiciones
+     with open(file, "r") as file:
+            data = [[int(num) for num in line.split()] for line in file] #archivo de entrada lo pasa a listas
+
+     CELL_SIZE = 40
+     MARGIN = 10
+     matrix = [[data[i][j] for j in range(10)] for i in range(10)]
+     image=imgGoku
+     pintados = []
+     contador = 0
+
+     for n_pos in way:
+      pintados.append(n_pos)
+      x=n_pos[0]
+      y=n_pos[1]
+      objeto_pos_actual = matrix[x][y]
+
+      rect = pygame.Rect((y+1) * (CELL_SIZE + MARGIN) + MARGIN, (x+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
+      button = pygame_gui.elements.UILabel(rect, "", manager=manager)
+      button.set_image(image)
+
+      pygame.time.wait(1000)
+      # Actualizar el manager
+      time_delta = clock.tick(60) / 1000.0
+      manager.update(time_delta)
+      manager.draw_ui(screen)
+      pygame.display.update()
+
+      uno_pintados = pintados[contador]
+      x_ant = uno_pintados[0]
+      y_ant = uno_pintados[1]
+      
+      if objeto_pos_actual == 1:
+                    image_ant = imgMuro
+      elif objeto_pos_actual == 2:
+                    image_ant = white
+             
+      elif objeto_pos_actual == 3:
+                    image_ant = imgFreezer
+            
+      elif objeto_pos_actual == 4:
+                     image_ant = imgCell
+             
+      elif objeto_pos_actual == 5:
+                     image_ant = imgSemilla
+             
+      elif objeto_pos_actual == 6:
+                     image_ant = imgGoku_Estela
+             
+      else:
+                     image_ant = imgGoku_Estela
+             
+
+      rect = pygame.Rect((y_ant+1) * (CELL_SIZE + MARGIN) + MARGIN, (x_ant+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
+      button = pygame_gui.elements.UILabel(rect, "", manager=manager)
+      button.set_image(image_ant)
+
+      contador+=1
+
+
+        # Aquí puedes hacer lo que quieras con el elemento
+
         
         
 
@@ -81,6 +137,7 @@ def matriz(file):
         goals = []
         # Dibuja la matriz en la pantalla
         buttons=[]
+
         for i in range(10):
                 row=[]
                 for j in range(10):
@@ -100,6 +157,8 @@ def matriz(file):
                         goals.append((i,j))
                     else:
                         image = white
+                    # limit to 1 frames per second.
+                    #pygame.time.delay(1000) # Espera por 1 segundo
 
                     rect = pygame.Rect((j+1) * (CELL_SIZE + MARGIN) + MARGIN, (i+2) * (CELL_SIZE + MARGIN) + MARGIN, CELL_SIZE, CELL_SIZE)
                     button = pygame_gui.elements.UILabel(rect, "", manager=manager)
@@ -107,14 +166,97 @@ def matriz(file):
                     row.append(button)
                 buttons.append(row)
                     
-                    #font = pygame.font.SysFont(None, 30)
-                    
                     #text = font.render(str(matrix[i][j]), True, (0, 0, 0))
                    # screen.blit(image, (j * (CELL_SIZE + MARGIN) + MARGIN, i * (CELL_SIZE + MARGIN) + MARGIN))
+        # Actualizar la pantalla y manejar eventos de pygame
+                 
         return matrix, start, goals
         #screen.blit(image, rect)
+'''
+def showInterface(self):
 
+         with open(file, "r") as file:
+            data = [[int(num) for num in line.split()] for line in file] #archivo de entrada lo pasa a listas
+        # Configuración de la matriz
+        CELL_SIZE = 40
+        MARGIN = 10
+        matrix = [[data[i][j] for j in range(10)] for i in range(10)]
+        start = ()
+        goals = []
 
+        for row in range(10):
+            for column in range(10):
+                if (matrix[row, column] != 1 and matrix[row, column] != 2 and matrix[row, column] != 5 and matrix[row, column] != 3 and matrix[row, column] != 4 and matrix[row, column] != 6):
+                    color = WHITE
+                    pygame.draw.rect(screen,
+                                     color,
+                                     [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                      (MARGIN+HIGHCELL) * row + MARGIN,
+                                      LENGTHCELL,
+                                      HIGHCELL])
+                if matrix[row, column] == 1:
+                    color = BROWN
+                    pygame.draw.rect(screen,
+                                     color,
+                                     [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                      (MARGIN+HIGHCELL) * row + MARGIN,
+                                      LENGTHCELL,
+                                      HIGHCELL])
+                if matrix[row, column] == 2:
+
+                    imagen_redimensionada = pygame.transform.scale(
+                        self.__imgMario, (45, 45))
+                    screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                        (MARGIN+HIGHCELL) *
+                                                        row + MARGIN,
+                                                        LENGTHCELL,
+                                                        HIGHCELL])
+                if matrix[row, column] == 5:
+
+                    imagen_redimensionada = pygame.transform.scale(
+                        self.__imgKoopa, (45, 45))
+                    screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                        (MARGIN+HIGHCELL) *
+                                                        row + MARGIN,
+                                                        LENGTHCELL,
+                                                        HIGHCELL])
+                if matrix[row, column] == 3:
+
+                    imagen_redimensionada = pygame.transform.scale(
+                        self.__imgStar, (45, 45))
+                    screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                        (MARGIN+HIGHCELL) *
+                                                        row + MARGIN,
+                                                        LENGTHCELL,
+                                                        HIGHCELL])
+                if matrix[row, column] == 4:
+
+                    imagen_redimensionada = pygame.transform.scale(
+                        self.__imgFlower, (45, 45))
+                    screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                        (MARGIN+HIGHCELL) *
+                                                        row + MARGIN,
+                                                        LENGTHCELL,
+                                                        HIGHCELL])
+                if matrix[row, column] == 6:
+
+                    imagen_redimensionada = pygame.transform.scale(
+                        self.__imgPrincess, (45, 45))
+                    screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                        (MARGIN+HIGHCELL) *
+                                                        row + MARGIN,
+                                                        LENGTHCELL,
+                                                        HIGHCELL])
+                if matrix[row, column] == 8:
+                    imagen_redimensionada = pygame.transform.scale(
+                        self.__imgMarioAndPrincess, (45, 45))
+                    screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                        (MARGIN+HIGHCELL) *
+                                                        row + MARGIN,
+                                                        LENGTHCELL,
+                                                        HIGHCELL])
+        pygame.display.flip()
+'''
 # Crear botones
 button_width = 100
 button_height = 40
@@ -180,6 +322,7 @@ button6 = pygame_gui.elements.UIButton(
 m=[]
 clock = pygame.time.Clock()
 running = True
+
 while running:
     time_delta = clock.tick(60) / 1000.0  # Actualizar el tiempo delta
     for event in pygame.event.get():
@@ -193,15 +336,16 @@ while running:
                     print("Cargar mundo")
                     txt = abrir_archivo()
                     matriz(txt)
+                    
                 elif event.ui_element == button2:
                     print("Amplitud")
-                    draw_label(amplitud.bfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
+                    draw_label(amplitud.bfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]),txt)
                 elif event.ui_element == button3:
                     print("Costo uniforme")
-                    draw_label(costouniforme.ucs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
+                    #draw_label(costouniforme.ucs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
                 elif event.ui_element == button4:
                     print("Profundidad")
-                    draw_label(profundidad.dfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]))
+                    draw_label(profundidad.dfs(matriz(txt)[0],matriz(txt)[1],matriz(txt)[2]),txt)
                 elif event.ui_element == button5:
                     print("Avara")
                 elif event.ui_element == button6:
