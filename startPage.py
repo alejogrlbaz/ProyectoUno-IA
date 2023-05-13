@@ -57,6 +57,7 @@ imgEsfera = pygame.image.load("img/esfera.png")
 imgEsfera = pygame.transform.scale(imgEsfera, (IMAGE_SIZE, IMAGE_SIZE))
 
 
+=======
 def draw_label(way,file):
 
     #creamos la martiz incial para comprar las posiciones
@@ -120,6 +121,7 @@ def draw_label(way,file):
 
 
         # Aquí puedes hacer lo que quieras con el elemento
+
 
         
         
