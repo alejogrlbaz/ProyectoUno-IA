@@ -71,3 +71,4 @@ def dfs(matriz, start, goals):
             stack.append(x)
             print(f"Visited nodes: {visited}")
             print(f"Stack: {stack}")
+        
